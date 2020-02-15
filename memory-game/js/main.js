@@ -34,23 +34,47 @@ let cardsInPlay = [];
 function checkForMatch(){
     if (cardsInPlay.length === 2) {
         if (cardsInPlay[0] === cardsInPlay[1]) {
-            // console.log('You found match!');
-            alert('You found match!');
+            console.log('You found match!');
+            //alert('You found match!');
+            cardsInPlay = [];
         } else {
-            // console.log(`Sorry, try again`);
-            alert('Sorry, try again');
+            console.log(`Sorry, try again`);
+            //alert('Sorry, try again');
         }
 
     }
 }
-function flipCard(cardId){
+function flipCard(){
 
-    console.log(`User flipped ${cards[cardId].rank}`);
+    let cardId = this.getAttribute("data-id");
     cardsInPlay.push(cards[cardId].rank);
-    console.log(cards[cardId].cardImage);
-    console.log(cards[cardId].suit);
+
+    this.setAttribute("src",cards[cardId].cardImage)
     checkForMatch();
 }
-flipCard(0);
-flipCard(2);
+function creatBoard(){
+    for(let i = 0; i < cards.length; i++){
+       let cardElement =  document.createElement('img');
+       cardElement.setAttribute('src', "images/back.png");
+       cardElement.setAttribute('data-id', i);
+    cardElement.addEventListener('click',flipCard);
+    document.getElementById('game-board').appendChild(cardElement);
+
+    }
+}
+
+creatBoard();
+function restart(){
+    //This only reseted my board but the alert for the fucntion flipCard was not 
+    //.. alerting again
+    // let element = document.getElementById('game-board');
+    // while(element.hasChildNodes()){
+    //     element.removeChild(element.firstChild)
+    // }
+
+    // creatBoard();
+    location.reload();
+}
+document.querySelector('button').addEventListener('click', restart);
+
 
