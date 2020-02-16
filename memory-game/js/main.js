@@ -31,16 +31,21 @@ let cards = [
     }
 ]
 let cardsInPlay = [];
+let score = 0; //This will keep track of the score 
 function checkForMatch(){
     if (cardsInPlay.length === 2) {
         if (cardsInPlay[0] === cardsInPlay[1]) {
-            console.log('You found match!');
-            //alert('You found match!');
+            score++;
+            // console.log(`You found match! You have won ${score}`);
+            alert(`You found match! You have won ${score}`);
             cardsInPlay = [];
         } else {
-            console.log(`Sorry, try again`);
-            //alert('Sorry, try again');
+            // console.log(`Sorry, try again`);
+            alert('Sorry, try again');
         }
+        //this will delete everything in the array to just compare index 0 and 1 for the next round.
+        cardsInPlay.pop();
+        cardsInPlay.pop();
 
     }
 }
@@ -50,7 +55,8 @@ function flipCard(){
     cardsInPlay.push(cards[cardId].rank);
 
     this.setAttribute("src",cards[cardId].cardImage)
-    checkForMatch();
+    //I used setimmeout because it dispaly the second card after it did this function and I wanted to displaythe second card first before it did the function
+    setTimeout(checkForMatch, 10);
 }
 function creatBoard(){
     for(let i = 0; i < cards.length; i++){
@@ -65,15 +71,19 @@ function creatBoard(){
 
 creatBoard();
 function restart(){
-    //This only reseted my board but the alert for the fucntion flipCard was not 
-    //.. alerting again
-    // let element = document.getElementById('game-board');
-    // while(element.hasChildNodes()){
-    //     element.removeChild(element.firstChild)
-    // }
-
-    // creatBoard();
-    location.reload();
+    //This won't reset the score just the board
+    //This will restart the board and flip the card downside up.
+    let element = document.getElementById('game-board');
+    while(element.hasChildNodes()){
+        element.removeChild(element.firstChild)
+    }
+    //here will delete any elements in the cardInPlay just incase
+    while(cardsInPlay.length > 0){
+        cardsInPlay.pop();
+    }
+    creatBoard();
+    //I first used this to just reload the page . this is the same as clicking the refresh button
+    //location.reload();
 }
 document.querySelector('button').addEventListener('click', restart);
 
