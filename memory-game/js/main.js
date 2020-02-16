@@ -56,9 +56,19 @@ function flipCard(){
 
     this.setAttribute("src",cards[cardId].cardImage)
     //I used setimmeout because it dispaly the second card after it did this function and I wanted to displaythe second card first before it did the function
-    setTimeout(checkForMatch, 10);
+    setTimeout(checkForMatch, 50);
+}
+function resetCards(){
+    for (let i = 3; i > 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        let temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }    
 }
 function creatBoard(){
+    //resetCards();
+    //This will display the random cards
     for(let i = 0; i < cards.length; i++){
        let cardElement =  document.createElement('img');
        cardElement.setAttribute('src', "images/back.png");
@@ -81,6 +91,7 @@ function restart(){
     while(cardsInPlay.length > 0){
         cardsInPlay.pop();
     }
+    resetCards();
     creatBoard();
     //I first used this to just reload the page . this is the same as clicking the refresh button
     //location.reload();
